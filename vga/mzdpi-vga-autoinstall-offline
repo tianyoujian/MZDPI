@@ -1,0 +1,226 @@
+#!/bin/sh
+
+do_dts_dtb() {
+# now create dts file
+cat <<\EOF > /boot/overlays/mzdpi.dts && 
+/dts-v1/;
+
+/ {
+	compatible = "brcm,bcm2708";
+
+	fragment@0 {
+		target = <0xdeadbeef>;
+
+		__overlay__ {
+			pinctrl-names = "default";
+			pinctrl-0 = <0x1>;
+		};
+	};
+
+	fragment@1 {
+		target = <0xdeadbeef>;
+
+		__overlay__ {
+
+			dpi18_pins {
+				brcm,pins = <0x0 0x1 0x2 0x3 0x4 0x5 0x6 0xc 0xd 0xe 0xf 0x10 0x11 0x14 0x15 0x16 0x17 0x18>;
+				brcm,function = <0x6 0x6 0x6 0x6 0x6 0x6 0x6 0x6 0x6 0x6 0x6 0x6 0x6 0x6 0x6 0x6 0x6 0x6>;
+				brcm,pull = <0x1>;
+				linux,phandle = <0x1>;
+				phandle = <0x1>;
+			};
+		};
+	};
+
+	__symbols__ {
+		dpi18_pins = "/fragment@1/__overlay__/dpi18_pins";
+	};
+
+	__fixups__ {
+		leds = "/fragment@0:target:0";
+		gpio = "/fragment@1:target:0";
+	};
+
+	__local_fixups__ {
+		fixup = "/fragment@0/__overlay__:pinctrl-0:0";
+	};
+};
+EOF
+dtc -I dts -O dtb -o /boot/overlays/mzdpi.dtbo /boot/overlays/mzdpi.dts
+}
+
+do_create_conf() {
+if [ -f "/etc/X11/xorg.conf.d/99-calibration.conf" ];then
+	return
+fi
+
+mkdir /etc/X11/xorg.conf.d
+cat <<EOF > /etc/X11/xorg.conf.d/99-calibration.conf 
+Section "InputClass"
+	Identifier	"calibration"
+	MatchProduct	"ADS7846 Touchscreen"
+	Option	"Calibration"	"195 3895 240 3813"
+	Option	"SwapAxes"	"0"
+EndSection
+
+EOF
+
+}
+
+dpkg -i xserver-xorg-input-evdev.deb
+dpkg -i xinput-calibrator.deb
+
+if [ -f "/usr/share/X11/xorg.conf.d/40-libinput.conf" ];then
+	mv /usr/share/X11/xorg.conf.d/40-libinput.conf /usr/share/X11/xorg.conf.d/40-libinput.bak
+fi
+
+dpkg -i matchbox-keyboard.deb
+
+DTBFILE=/boot/bcm2708-rpi-0-w.dtb
+if [ -f "$DTBFILE" ];then
+	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
+
+	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
+		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
+      			echo "\nZERO-W";
+			sed /boot/tmp.dts -i -e "s/brcm,function = <0x1>;/brcm,function = <0x6>;/"
+			cp /boot/bcm2708-rpi-0-w.dtb /boot/bcm2708-rpi-0-w.bak	
+			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
+		fi
+	fi
+	rm /boot/tmp.dts
+fi
+
+
+DTBFILE=/boot/bcm2708-rpi-0.dtb
+if [ -f "$DTBFILE" ];then
+	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
+
+	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
+		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
+	      		echo "\nZERO";
+			sed /boot/tmp.dts -i -e "s/brcm,function = <0x1>;/brcm,function = <0x6>;/"
+			cp /boot/bcm2708-rpi-0.dtb /boot/bcm2708-rpi-0.bak	
+			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
+		fi
+	fi
+	rm /boot/tmp.dts
+fi
+
+DTBFILE=/boot/bcm2708-rpi-b-plus.dtb
+if [ -f "$DTBFILE" ];then
+	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
+	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
+		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
+	      		echo "\n1B+";
+			sed /boot/tmp.dts -i -e "s/brcm,function = <0x1>;/brcm,function = <0x6>;/"
+			cp /boot/bcm2708-rpi-b-plus.dtb /boot/bcm2708-rpi-b-plus.bak
+			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
+		fi
+	fi
+	rm /boot/tmp.dts
+fi
+
+DTBFILE=/boot/bcm2708-rpi-cm.dtb
+if [ -f "$DTBFILE" ];then
+	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
+	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
+		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
+      			echo "\nCM";
+			sed /boot/tmp.dts -i -e "s/brcm,function = <0x1>;/brcm,function = <0x6>;/"
+			cp /boot/bcm2708-rpi-cm.dtb /boot/bcm2708-rpi-cm.bak
+			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
+		fi
+	fi
+	rm /boot/tmp.dts
+fi
+
+DTBFILE=/boot/bcm2709-rpi-2-b.dtb
+if [ -f "$DTBFILE" ];then
+	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
+	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
+		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
+      			echo "\n2B";
+			sed /boot/tmp.dts -i -e "s/brcm,function = <0x1>;/brcm,function = <0x6>;/"
+			cp /boot/bcm2709-rpi-2-b.dtb /boot/bcm2709-rpi-2-b.bak
+			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
+		fi
+	fi
+	rm /boot/tmp.dts
+fi
+
+DTBFILE=/boot/bcm2710-rpi-3-b.dtb
+if [ -f "$DTBFILE" ];then
+	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
+	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
+		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
+      			echo "\n3B";
+			sed /boot/tmp.dts -i -e "s/brcm,function = <0x1>;/brcm,function = <0x6>;/"
+			cp /boot/bcm2710-rpi-3-b.dtb /boot/bcm2710-rpi-3-b.bak
+			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
+		fi
+	fi
+	rm /boot/tmp.dts
+fi
+
+DTBFILE=/boot/bcm2710-rpi-3-b-plus.dtb
+if [ -f "$DTBFILE" ];then
+	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
+	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
+		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
+      			echo "\n3B+";
+			sed /boot/tmp.dts -i -e "s/brcm,function = <0x1>;/brcm,function = <0x6>;/"
+			cp /boot/bcm2710-rpi-3-b-plus.dtb /boot/bcm2710-rpi-3-b-plus.bak
+			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
+		fi
+	fi
+	rm /boot/tmp.dts
+fi
+
+DTBFILE=/bootbcm2710-rpi-cm3.dtb
+if [ -f "$DTBFILE" ];then
+	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
+	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
+		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
+      			echo "\nCM3";
+			sed /boot/tmp.dts -i -e "s/brcm,function = <0x1>;/brcm,function = <0x6>;/"
+			cp /boot/bcm2710-rpi-cm3.dtb /boot/bcm2710-rpi-cm3.bak
+			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
+		fi
+	fi
+	rm /boot/tmp.dts
+fi
+
+do_create_conf
+do_dts_dtb
+
+cp /boot/config.txt /boot/tmp.txt
+
+sed  -i "/dtparam=spi=/d" /boot/tmp.txt
+sed  -i "/dtoverlay=ads7846/d" /boot/tmp.txt
+sed  -i "/display_rotate=/d" /boot/tmp.txt
+sed  -i "/dtoverlay=mzdpi/d" /boot/tmp.txt
+sed  -i "/framebuffer_width=/d" /boot/tmp.txt
+sed  -i "/framebuffer_height=/d" /boot/tmp.txt
+sed  -i "/enable_dpi_lcd=/d" /boot/tmp.txt
+sed  -i "/display_default_lcd=/d" /boot/tmp.txt
+sed  -i "/dpi_group=/d" /boot/tmp.txt
+sed  -i "/dpi_mode=/d" /boot/tmp.txt
+sed  -i "/dpi_output_format=/d" /boot/tmp.txt
+sed  -i "/hdmi_timings=/d" /boot/tmp.txt
+
+echo "dtparam=spi=on" >> /boot/tmp.txt
+echo "dtoverlay=ads7846,penirq=27,swapxy=1,xmin=200,xmax=3850,ymin=200,ymax=3850" >> /boot/tmp.txt
+echo "display_rotate=3" >> /boot/tmp.txt
+echo "dtoverlay=mzdpi" >> /boot/tmp.txt
+echo "framebuffer_width=640" >> /boot/tmp.txt
+echo "framebuffer_height=480" >> /boot/tmp.txt
+echo "enable_dpi_lcd=1" >> /boot/tmp.txt
+echo "display_default_lcd=1" >> /boot/tmp.txt
+echo "dpi_group=2" >> /boot/tmp.txt
+echo "dpi_mode=87" >> /boot/tmp.txt
+echo "dpi_output_format=0x07f003" >> /boot/tmp.txt
+echo "hdmi_timings=480 0 41 20 60 640 0 5 10 10 0 0 0 60 0 32000000 1" >> /boot/tmp.txt
+
+cp /boot/tmp.txt /boot/config.txt
+
