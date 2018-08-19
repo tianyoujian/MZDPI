@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Toggle Matchbox Keyboard
-Comment=Toggle Matchbox Keyboard
-Exec=toggle-matchbox-keyboard.sh
-Type=Application
-Icon=matchbox-keyboard.png
-Categories=Panel;Utility;MB
-X-MB-INPUT-MECHANSIM=True
