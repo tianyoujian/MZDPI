@@ -177,7 +177,7 @@ if [ -f "$DTBFILE" ];then
 	rm /boot/tmp.dts
 fi
 
-DTBFILE=/bootbcm2710-rpi-cm3.dtb
+DTBFILE=/boot/bcm2710-rpi-cm3.dtb
 if [ -f "$DTBFILE" ];then
 	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
 	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
