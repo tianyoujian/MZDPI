@@ -213,14 +213,14 @@ echo "dtparam=spi=on" >> /boot/tmp.txt
 echo "dtoverlay=ads7846,penirq=27,swapxy=1,xmin=200,xmax=3850,ymin=200,ymax=3850" >> /boot/tmp.txt
 echo "display_rotate=3" >> /boot/tmp.txt
 echo "dtoverlay=mzdpi" >> /boot/tmp.txt
-echo "framebuffer_width=640" >> /boot/tmp.txt
-echo "framebuffer_height=480" >> /boot/tmp.txt
+echo "framebuffer_width=480" >> /boot/tmp.txt
+echo "framebuffer_height=320" >> /boot/tmp.txt
 echo "enable_dpi_lcd=1" >> /boot/tmp.txt
 echo "display_default_lcd=1" >> /boot/tmp.txt
 echo "dpi_group=2" >> /boot/tmp.txt
 echo "dpi_mode=87" >> /boot/tmp.txt
 echo "dpi_output_format=0x07f003" >> /boot/tmp.txt
-echo "hdmi_timings=480 0 41 20 60 640 0 5 10 10 0 0 0 60 0 32000000 1" >> /boot/tmp.txt
+echo "hdmi_timings=321 0 28 18 28 480 0 2 2 4 0 0 0 60 0 32000000 1" >> /boot/tmp.txt
 
 cp /boot/tmp.txt /boot/config.txt
 
