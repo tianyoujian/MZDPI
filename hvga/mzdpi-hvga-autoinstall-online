@@ -46,7 +46,7 @@ cat <<\EOF > /boot/overlays/mzdpi.dts &&
 	};
 };
 EOF
-dtc -I dts -O dtb -o /boot/overlays/mzdpi.dtbo /boot/overlays/mzdpi.dts
+dtc -W no-unit_address_vs_reg -I dts -O dtb -o /boot/overlays/mzdpi.dtbo /boot/overlays/mzdpi.dts
 }
 
 do_create_conf() {
@@ -59,7 +59,7 @@ cat <<EOF > /etc/X11/xorg.conf.d/99-calibration.conf
 Section "InputClass"
 	Identifier	"calibration"
 	MatchProduct	"ADS7846 Touchscreen"
-	Option	"Calibration"	"195 3895 240 3813"
+	Option	"Calibration"	"3900 120 3900 140"
 	Option	"SwapAxes"	"0"
 EndSection
 
@@ -210,8 +210,8 @@ sed  -i "/dpi_output_format=/d" /boot/tmp.txt
 sed  -i "/hdmi_timings=/d" /boot/tmp.txt
 
 echo "dtparam=spi=on" >> /boot/tmp.txt
-echo "dtoverlay=ads7846,penirq=27,swapxy=1,xmin=200,xmax=3850,ymin=200,ymax=3850" >> /boot/tmp.txt
-echo "display_rotate=3" >> /boot/tmp.txt
+echo "dtoverlay=ads7846,penirq=18,swapxy=0,xmin=120,xmax=3900,ymin=140,ymax=3900" >> /boot/tmp.txt
+echo "display_rotate=1" >> /boot/tmp.txt
 echo "dtoverlay=mzdpi" >> /boot/tmp.txt
 echo "framebuffer_width=480" >> /boot/tmp.txt
 echo "framebuffer_height=320" >> /boot/tmp.txt
