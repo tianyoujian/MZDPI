@@ -1,22 +1,7 @@
-dtparam=spi=on
-dtoverlay=ads7846,penirq=27,swapxy=1,xmin=200,xmax=3850,ymin=200,ymax=3850
 
-display_rotate=3
-gpio=18=op,dh,pd
-gpio=0-8=a2
-gpio=12-17=a2
-gpio=20-24=a2
-#gpio=9-11=a0
-framebuffer_width=640
-framebuffer_height=480
-     
-enable_dpi_lcd=1
-display_default_lcd=1
-     
-dpi_group=2
-dpi_mode=87
-    
-dpi_output_format=0x07f003
-     
-hdmi_timings=480 0 228 8 1 640 0 4 2 1 0 0 0 60 0 32000000 3
+mzp280v01br(ZERO B+)
+
+in config.txt add
+[all]
+include mzp280v02br.txt
 
