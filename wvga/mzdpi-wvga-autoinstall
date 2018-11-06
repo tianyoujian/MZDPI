@@ -68,6 +68,8 @@ sed  -i "/hdmi_timings=/d" /boot/tmp.txt
 
 echo "display_rotate=3" >> /boot/tmp.txt
 echo "dtoverlay=mzdpi6" >> /boot/tmp.txt
+echo "gpio=18=op,dh,pd" >> /boot/tmp.txt
+echo "gpio=19=op,dh,pd" >> /boot/tmp.txt
 echo "framebuffer_width=800" >> /boot/tmp.txt
 echo "framebuffer_height=480" >> /boot/tmp.txt
 echo "enable_dpi_lcd=1" >> /boot/tmp.txt

@@ -1,0 +1,18 @@
+#!/bin/sh
+cp /boot/config.txt /boot/tmp.txt
+
+sed  -i "/dtparam=spi=/d" /boot/tmp.txt
+sed  -i "/dtoverlay=ads7846/d" /boot/tmp.txt
+sed  -i "/display_rotate=/d" /boot/tmp.txt
+sed  -i "/dtoverlay=mzdpi/d" /boot/tmp.txt
+sed  -i "/framebuffer_width=/d" /boot/tmp.txt
+sed  -i "/framebuffer_height=/d" /boot/tmp.txt
+sed  -i "/enable_dpi_lcd=/d" /boot/tmp.txt
+sed  -i "/display_default_lcd=/d" /boot/tmp.txt
+sed  -i "/dpi_group=/d" /boot/tmp.txt
+sed  -i "/dpi_mode=/d" /boot/tmp.txt
+sed  -i "/dpi_output_format=/d" /boot/tmp.txt
+sed  -i "/hdmi_timings=/d" /boot/tmp.txt
+
+cp /boot/tmp.txt /boot/config.txt
+rm /boot/tmp.txt
