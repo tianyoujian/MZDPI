@@ -1,5 +1,26 @@
 #!/bin/sh
 
+do_txt_dtb() {
+# now create dts file
+cat <<\EOF > /boot/mzp361wv1t.txt && 
+ [gpio26=1]
+ gpio=0-9=a2
+ gpio=12-17=a2
+ gpio=20-25=a2
+ gpio=18,19=op,dh,pd
+ display_rotate=3
+ framebuffer_width=800
+ framebuffer_height=480
+ enable_dpi_lcd=1
+ display_default_lcd=1
+ dpi_group=2
+ dpi_mode=87
+ dpi_output_format=0x07f006
+ hdmi_timings=480 0 41 20 60 800 0 5 10 10 0 0 0 60 0 32000000 3
+EOF&
+}
+
+
 do_dts_dtb() {
 # now create dts file
 cat <<\EOF > /boot/overlays/mzdpi6.dts && 
@@ -50,6 +71,7 @@ dtc -I dts -O dtb -o /boot/overlays/mzdpi6.dtbo /boot/overlays/mzdpi6.dts
 }
 
 do_dts_dtb
+do_txt_dtb
 
 cp /boot/config.txt /boot/tmp.txt
 
@@ -66,18 +88,8 @@ sed  -i "/dpi_mode=/d" /boot/tmp.txt
 sed  -i "/dpi_output_format=/d" /boot/tmp.txt
 sed  -i "/hdmi_timings=/d" /boot/tmp.txt
 
-echo "display_rotate=3" >> /boot/tmp.txt
-echo "dtoverlay=mzdpi6" >> /boot/tmp.txt
-echo "gpio=18=op,dh,pd" >> /boot/tmp.txt
-echo "gpio=19=op,dh,pd" >> /boot/tmp.txt
-echo "framebuffer_width=800" >> /boot/tmp.txt
-echo "framebuffer_height=480" >> /boot/tmp.txt
-echo "enable_dpi_lcd=1" >> /boot/tmp.txt
-echo "display_default_lcd=1" >> /boot/tmp.txt
-echo "dpi_group=2" >> /boot/tmp.txt
-echo "dpi_mode=87" >> /boot/tmp.txt
-echo "dpi_output_format=0x07f006" >> /boot/tmp.txt
-echo "hdmi_timings=480 0 41 20 60 800 0 5 10 10 0 0 0 60 0 32000000 3" >> /boot/tmp.txt
+echo "[all]" >> /boot/tmp.txt
+echo "include mzp361wv1t.txt" >> /boot/tmp.txt
 
 cp /boot/tmp.txt /boot/config.txt
 
