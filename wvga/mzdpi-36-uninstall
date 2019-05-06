@@ -18,3 +18,10 @@ sed  -i "/include mzp361wv1t.txt/d" /boot/tmp.txt
 
 cp /boot/tmp.txt /boot/config.txt
 rm /boot/tmp.txt
+
+cp /etc/rc.local /etc/tmp.txt
+
+sed  -i "/python \/home\/pi/d" /etc/tmp.txt
+
+cp /etc/tmp.txt /etc/rc.local
+rm /etc/tmp.txt
