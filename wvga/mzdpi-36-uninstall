@@ -13,6 +13,8 @@ sed  -i "/dpi_group=/d" /boot/tmp.txt
 sed  -i "/dpi_mode=/d" /boot/tmp.txt
 sed  -i "/dpi_output_format=/d" /boot/tmp.txt
 sed  -i "/hdmi_timings=/d" /boot/tmp.txt
+sed  -i "/\[all]/d" /boot/tmp.txt
+sed  -i "/include mzp361wv1t.txt/d" /boot/tmp.txt
 
 cp /boot/tmp.txt /boot/config.txt
 rm /boot/tmp.txt
