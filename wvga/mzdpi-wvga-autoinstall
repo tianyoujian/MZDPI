@@ -3,7 +3,6 @@
 do_txt_dtb() {
 # now create dts file
 cat <<EOF > /boot/mzp361wv1t.txt
-[gpio26=1]
 gpio=0-9=a2
 gpio=12-17=a2
 gpio=20-25=a2
@@ -33,7 +32,7 @@ cat <<EOF > /etc/rc.local
 # By default this script does nothing.
 
 # Print the IP address
-_IP=$(hostname -I) || true
+_IP=\$(hostname -I) || true
 if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
