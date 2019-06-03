@@ -209,6 +209,7 @@ sed  -i "/dpi_mode=/d" /boot/tmp.txt
 sed  -i "/dpi_output_format=/d" /boot/tmp.txt
 sed  -i "/hdmi_timings=/d" /boot/tmp.txt
 
+echo "gpio=18=op,dh" >> /boot/tmp.txt
 echo "dtparam=spi=on" >> /boot/tmp.txt
 echo "dtoverlay=ads7846,penirq=27,swapxy=1,xmin=200,xmax=3850,ymin=200,ymax=3850" >> /boot/tmp.txt
 echo "display_rotate=3" >> /boot/tmp.txt
