@@ -1,4 +1,33 @@
 #!/bin/sh
+do_mzp280v01br_txt() {
+# now create txt file
+cat > /boot/mzp280v01br.txt <<EOF
+dtparam=spi=on
+dtoverlay=ads7846,penirq=27,swapxy=1,xmin=200,xmax=3850,ymin=200,ymax=3850
+
+display_rotate=3
+gpio=18-19=op,dh,pd
+gpio=0-8=a2
+gpio=12-17=a2
+gpio=20-24=a2
+#gpio=9-11=a0
+framebuffer_width=640
+framebuffer_height=480
+     
+enable_dpi_lcd=1
+display_default_lcd=1
+     
+dpi_group=2
+dpi_mode=87
+    
+dpi_output_format=0x07f003
+hdmi_timings=480 0 228 8 1 640 0 4 2 1 0 0 0 60 0 32000000 3
+[pi4]
+dpi_output_format=0x07f203
+
+EOF
+}
+
 do_4b_dtb() {
 # now create dts file
 cat <<\EOF > /boot/bcm2711-rpi-4-b.dts && 
@@ -2159,40 +2188,13 @@ fi
 do_create_conf
 do_mzdpi3_dtb
 do_4b_dtb
+do_mzp280v01br_txt
+
 cp /boot/config.txt /boot/tmp.txt
 
-sed  -i "/dtparam=spi=/d" /boot/tmp.txt
-sed  -i "/dtoverlay=ads7846/d" /boot/tmp.txt
-sed  -i "/display_rotate=/d" /boot/tmp.txt
-sed  -i "/dtoverlay=mzdpi3/d" /boot/tmp.txt
-sed  -i "/framebuffer_width=/d" /boot/tmp.txt
-sed  -i "/framebuffer_height=/d" /boot/tmp.txt
-sed  -i "/enable_dpi_lcd=/d" /boot/tmp.txt
-sed  -i "/display_default_lcd=/d" /boot/tmp.txt
-sed  -i "/dpi_group=/d" /boot/tmp.txt
-sed  -i "/dpi_mode=/d" /boot/tmp.txt
-sed  -i "/dpi_output_format=/d" /boot/tmp.txt
-sed  -i "/hdmi_timings=/d" /boot/tmp.txt
-sed  -i "/dtoverlay=vc4-/d" /boot/tmp.txt
-
-echo "gpio=18-19=op,dh" >> /boot/tmp.txt
-echo "gpio=0-8=a2" >> /boot/tmp.txt
-echo "gpio=12-17=a2" >> /boot/tmp.txt
-echo "gpio=20-24=a2" >> /boot/tmp.txt
-echo "dtparam=spi=on" >> /boot/tmp.txt
-echo "dtoverlay=ads7846,penirq=27,swapxy=1,xmin=200,xmax=3850,ymin=200,ymax=3850" >> /boot/tmp.txt
-echo "display_rotate=3" >> /boot/tmp.txt
-echo "dtoverlay=mzdpi3" >> /boot/tmp.txt
-echo "framebuffer_width=640" >> /boot/tmp.txt
-echo "framebuffer_height=480" >> /boot/tmp.txt
-echo "enable_dpi_lcd=1" >> /boot/tmp.txt
-echo "display_default_lcd=1" >> /boot/tmp.txt
-echo "dpi_group=2" >> /boot/tmp.txt
-echo "dpi_mode=87" >> /boot/tmp.txt
-echo "dpi_output_format=0x07f003" >> /boot/tmp.txt
-echo "hdmi_timings=480 0 41 20 60 640 0 5 10 10 0 0 0 60 0 32000000 1" >> /boot/tmp.txt
-echo "[pi4]" >> /boot/tmp.txt
-echo "dpi_output_format=0x07f203" >> /boot/tmp.txt
+sed  -i "/include mzp/d" /boot/tmp.txt
+echo "[all]" >> /boot/tmp.txt
+echo "include mzp280v01br.txt" >> /boot/tmp.txt
 
 cp /boot/tmp.txt /boot/config.txt
 
