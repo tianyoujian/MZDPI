@@ -2,9 +2,10 @@
 do_mzp351hv1tr_txt() {
 # now create txt file
 cat > /boot/mzp351hv1tr.txt <<EOF
-dtoverlay=ads7846,penirq=27,swapxy=1,xmin=200,xmax=3850,ymin=200,ymax=3850
+dtoverlay=ads7846,penirq=27,swapxy=1,xmin=150,xmax=3900,ymin=150,ymax=3900
 display_rotate=0
 gpio=18-19=op,dh,pd
+dtoverlay=gpio-fan,gpiopin=19,temp=55000
 gpio=0-8=a2
 gpio=12-17=a2
 gpio=20-24=a2
