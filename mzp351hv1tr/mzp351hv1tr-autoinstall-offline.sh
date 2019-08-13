@@ -95,15 +95,15 @@ EOF
 
 }
 
-apt-get install libfakekey0
-apt-get install -y xserver-xorg-input-evdev
-apt-get install -y xinput-calibrator
+dpkg -i ../common/libfakekey0_0.1-10_armhf.deb
+dpkg -i ../common/xserver-xorg-input-evdev_1%3a2.10.6-1+b1_armhf.deb
+dpkg -i ../common/xinput-calibrator_0.7.5+git20140201-1_armhf.deb
 
 if [ -f "/usr/share/X11/xorg.conf.d/40-libinput.conf" ];then
 	mv /usr/share/X11/xorg.conf.d/40-libinput.conf /usr/share/X11/xorg.conf.d/40-libinput.bak
 fi
 
-apt-get install -y matchbox-keyboard
+dpkg -i ../common/matchbox-keyboard_0.1+svn20080916-12_armhf.deb
 
 do_create_conf
 do_mzdpi3_dtb
