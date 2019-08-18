@@ -1,7 +1,7 @@
 #!/bin/sh
 do_mzp354hv05tr_txt() {
 # now create txt file
-cat > /boot/mzp354hv05tr.txt <<EOF
+cat > /boot/mzp351hv1tr.txt <<EOF
 [pi4]
 dtoverlay=ads7846,penirq=27,swapxy=1,xmin=150,xmax=3900,ymin=150,ymax=3900
 display_rotate=0
@@ -85,7 +85,7 @@ cat <<EOF > /etc/X11/xorg.conf.d/99-calibration.conf
 Section "InputClass"
 	Identifier	"calibration"
 	MatchProduct	"ADS7846 Touchscreen"
-	Option	"Calibration"	"150 3900 150 3900"
+	Option	"Calibration"	"195 3895 240 3813"
 	Option	"SwapAxes"	"0"
 EndSection
 
@@ -106,6 +106,14 @@ apt-get install -y matchbox-keyboard
 do_create_conf
 do_mzdpi3_dtb
 
+../common/bcm2708-rpi-b-plus.sh
+../common/bcm2708-rpi-cm.sh
+../common/bcm2708-rpi-zero.sh
+../common/bcm2708-rpi-zero-w.sh
+../common/bcm2709-rpi-2-b.sh
+../common/bcm2710-rpi-3-b.sh
+../common/bcm2710-rpi-3-b-plus.sh
+../common/bcm2710-rpi-cm3.sh
 ../common/bcm2711-rpi-4-b.sh
 do_mzp354hv05tr_txt
 
