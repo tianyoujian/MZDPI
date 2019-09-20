@@ -126,4 +126,13 @@ echo "[all]" >> /boot/tmp.txt
 echo "include mzp351hv1tr.txt" >> /boot/tmp.txt
 
 cp /boot/tmp.txt /boot/config.txt
-
+FILE=/etc/rc.local
+if [ -f "$DTBFILE" ];then
+cp /etc/rc.local /boot/tmp.txt
+sed  -i "/exit 0/d" /boot/tmp.txt
+echo "sudo python /home/pi/MZDPI/common/led-pwm.py &" >> /boot/tmp.txt
+echo "sudo python /home/pi/MZDPI/common/fan-pwm.py &" >> /boot/tmp.txt
+echo "exit 0" >> /boot/tmp.txt
+cp /boot/tmp.txt /etc/rc.local
+rm /boot/tmp.txt
+fi

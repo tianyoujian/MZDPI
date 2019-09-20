@@ -41,9 +41,9 @@ FILE=/etc/rc.local
 if [ -f "$DTBFILE" ];then
 cp /etc/rc.local /boot/tmp.txt
 sed  -i "/exit 0/d" /boot/tmp.txt
-sudo python /home/pi/MZDPI/mzp361wv1t/led-pwm.py &
-echo "sudo python /home/pi/MZDPI/mzp361wv1t/fan-pwm.py &" >> /boot/tmp.txt
+echo "sudo python /home/pi/MZDPI/common/led-pwm.py &" >> /boot/tmp.txt
+echo "sudo python /home/pi/MZDPI/common/fan-pwm.py &" >> /boot/tmp.txt
 echo "exit 0" >> /boot/tmp.txt
-cp /boot/tmp.txt  /etc/rc.local
+cp /boot/tmp.txt /etc/rc.local
 rm /boot/tmp.txt
 fi
