@@ -1,122 +1,60 @@
 #!/bin/sh
 
-DTBFILE=/boot/bcm2708-rpi-0-w.dtb
+DTBFILE=/boot/bcm2708-rpi-0-w.bak
 if [ -f "$DTBFILE" ];then
-	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
-
-	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
-		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
-      			echo "\nZERO-W";
-			sed /boot/tmp.dts -i -e "s/brcm,function = <0x6>;/brcm,function = <0x1>;/"
-			cp /boot/bcm2708-rpi-0-w.dtb /boot/bcm2708-rpi-0-w.bak	
-			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
-		fi
-	fi
-	rm /boot/tmp.dts
+	cp $DTBFILE /boot/bcm2708-rpi-0-w.dtb
 fi
 
 
-DTBFILE=/boot/bcm2708-rpi-0.dtb
+DTBFILE=/boot/bcm2708-rpi-0.bak
 if [ -f "$DTBFILE" ];then
-	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
-
-	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
-		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
-	      		echo "\nZERO";
-			sed /boot/tmp.dts -i -e "s/brcm,function = <0x6>;/brcm,function = <0x1>;/"
-			cp /boot/bcm2708-rpi-0.dtb /boot/bcm2708-rpi-0.bak	
-			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
-		fi
-	fi
-	rm /boot/tmp.dts
+	cp $DTBFILE /boot/bcm2708-rpi-0.dtb
 fi
 
-DTBFILE=/boot/bcm2708-rpi-b-plus.dtb
+DTBFILE=/boot/bcm2708-rpi-zero-w.bak
 if [ -f "$DTBFILE" ];then
-	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
-	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
-		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
-	      		echo "\n1B+";
-			sed /boot/tmp.dts -i -e "s/brcm,function = <0x6>;/brcm,function = <0x1>;/"
-			cp /boot/bcm2708-rpi-b-plus.dtb /boot/bcm2708-rpi-b-plus.bak
-			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
-		fi
-	fi
-	rm /boot/tmp.dts
+	cp $DTBFILE /boot/bcm2708-rpi-zero-w.dtb
 fi
 
-DTBFILE=/boot/bcm2708-rpi-cm.dtb
+
+DTBFILE=/boot/bcm2708-rpi-zero.bak
 if [ -f "$DTBFILE" ];then
-	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
-	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
-		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
-      			echo "\nCM";
-			sed /boot/tmp.dts -i -e "s/brcm,function = <0x6>;/brcm,function = <0x1>;/"
-			cp /boot/bcm2708-rpi-cm.dtb /boot/bcm2708-rpi-cm.bak
-			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
-		fi
-	fi
-	rm /boot/tmp.dts
+	cp $DTBFILE /boot/bcm2708-rpi-zero.dtb
 fi
 
-DTBFILE=/boot/bcm2709-rpi-2-b.dtb
+DTBFILE=/boot/bcm2708-rpi-b-plus.bak
 if [ -f "$DTBFILE" ];then
-	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
-	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
-		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
-      			echo "\n2B";
-			sed /boot/tmp.dts -i -e "s/brcm,function = <0x6>;/brcm,function = <0x1>;/"
-			cp /boot/bcm2709-rpi-2-b.dtb /boot/bcm2709-rpi-2-b.bak
-			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
-		fi
-	fi
-	rm /boot/tmp.dts
+	cp $DTBFILE /boot/bcm2708-rpi-b-plus.dtb
 fi
 
-DTBFILE=/boot/bcm2710-rpi-3-b.dtb
+DTBFILE=/boot/bcm2708-rpi-cm.bak
 if [ -f "$DTBFILE" ];then
-	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
-	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
-		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
-      			echo "\n3B";
-			sed /boot/tmp.dts -i -e "s/brcm,function = <0x6>;/brcm,function = <0x1>;/"
-			cp /boot/bcm2710-rpi-3-b.dtb /boot/bcm2710-rpi-3-b.bak
-			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
-		fi
-	fi
-	rm /boot/tmp.dts
+	cp $DTBFILE /boot/bcm2708-rpi-cm.dtb
 fi
 
-DTBFILE=/boot/bcm2710-rpi-3-b-plus.dtb
+DTBFILE=/boot/bcm2709-rpi-2-b.bak
 if [ -f "$DTBFILE" ];then
-	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
-	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
-		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
-      			echo "\n3B+";
-			sed /boot/tmp.dts -i -e "s/brcm,function = <0x6>;/brcm,function = <0x1>;/"
-			cp /boot/bcm2710-rpi-3-b-plus.dtb /boot/bcm2710-rpi-3-b-plus.bak
-			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
-		fi
-	fi
-	rm /boot/tmp.dts
+	cp $DTBFILE /boot/bcm2709-rpi-2-b.dtb
 fi
 
-DTBFILE=/bootbcm2710-rpi-cm3.dtb
+DTBFILE=/boot/bcm2710-rpi-3-b.bak
 if [ -f "$DTBFILE" ];then
-	dtc -W no-unit_address_vs_reg -I dtb -O dts -o /boot/tmp.dts $DTBFILE
-	if grep -q "brcm,pins = <0x8 0x7>;" /boot/tmp.dts; then
-		if grep -q "brcm,function = <0x1>;" /boot/tmp.dts; then
-      			echo "\nCM3";
-			sed /boot/tmp.dts -i -e "s/brcm,function = <0x6>;/brcm,function = <0x1>;/"
-			cp /boot/bcm2710-rpi-cm3.dtb /boot/bcm2710-rpi-cm3.bak
-			dtc -W no-unit_address_vs_reg -I dts -O dtb -o $DTBFILE /boot/tmp.dts 
-		fi
-	fi
-	rm /boot/tmp.dts
+	cp $DTBFILE /boot/bcm2710-rpi-3-b.dtb
+fi
+
+DTBFILE=/boot/bcm2710-rpi-3-b-plus.bak
+if [ -f "$DTBFILE" ];then
+	cp $DTBFILE /boot/bcm2710-rpi-3-b-plus.dtb
+fi
+
+DTBFILE=/boot/bcm2710-rpi-cm3.bak
+if [ -f "$DTBFILE" ];then
+	cp $DTBFILE /boot/bcm2710-rpi-cm3.dtb
 fi
 
 cp /boot/config.txt /boot/tmp.txt
 
+sed  -i "/gpio=7-8=/d" /boot/tmp.txt
 sed  -i "/dtparam=spi=/d" /boot/tmp.txt
 sed  -i "/dtoverlay=ads7846/d" /boot/tmp.txt
 sed  -i "/display_rotate=/d" /boot/tmp.txt
