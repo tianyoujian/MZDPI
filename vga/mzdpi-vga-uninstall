@@ -52,6 +52,10 @@ if [ -f "$DTBFILE" ];then
 	cp $DTBFILE /boot/bcm2710-rpi-cm3.dtb
 fi
 
+cp /etc/rc.local /boot/tmp.txt
+sed  -i "/sudo raspi-gpio set/d" /boot/tmp.txt
+cp /boot/tmp.txt /etc/rc.local 
+
 cp /boot/config.txt /boot/tmp.txt
 
 sed  -i "/gpio=7-8=/d" /boot/tmp.txt

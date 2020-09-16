@@ -246,6 +246,13 @@ fi
 do_create_conf
 do_dts_dtb
 
+cp /etc/rc.local /boot/tmp.txt
+sed  -i "/exit 0/d" /boot/tmp.txt
+echo "sudo raspi-gpio set 8 a2" >> /boot/tmp.txt
+echo "sudo raspi-gpio set 7 a2" >> /boot/tmp.txt
+echo "exit 0" >> /boot/tmp.txt
+cp /boot/tmp.txt /etc/rc.local 
+
 cp /boot/config.txt /boot/tmp.txt
 
 sed  -i "/gpio=18=/d" /boot/tmp.txt
