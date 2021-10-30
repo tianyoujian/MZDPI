@@ -10,7 +10,11 @@
 
     sudo reboot
 #MZP351HV00BR
+
 cd MZDPI/mzp351hv00br
+
 sudo chmod +x ./mzdpi-hvga-autoinstall
+
 sudo ./mzdpi-hvga-autoinstall
+
 sudo reboot
