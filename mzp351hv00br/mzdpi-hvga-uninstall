@@ -1,0 +1,13 @@
+#!/bin/sh
+
+sudo cp /etc/rc.local /boot/tmp.txt
+sed  -i "/raspi-gpio set 8/d" /boot/tmp.txt
+sed  -i "/raspi-gpio set 7/d" /boot/tmp.txt
+
+cp /boot/tmp.txt /etc/rc.local
+rm /boot/tmp.txt
+
+cp /boot/config.txt /boot/tmp.txt
+sed  -i "/include mzp351hv00br.txt/d" /boot/tmp.txt
+cp /boot/tmp.txt /boot/config.txt
+rm /boot/tmp.txt

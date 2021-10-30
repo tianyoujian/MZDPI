@@ -1,0 +1,18 @@
+dtoverlay=ads7846,penirq=27,swapxy=1,xmin=150,xmax=3970,ymin=150,ymax=3970
+display_rotate=1
+
+gpio=0-8=a2
+gpio=12-17=a2
+gpio=20-24=a2
+
+framebuffer_width=480
+framebuffer_height=320
+     
+enable_dpi_lcd=1
+display_default_lcd=1
+     
+dpi_group=2
+dpi_mode=87
+    
+dpi_output_format=0x07f203
+hdmi_timings=320 0 20 10 10 480 0 10 2 2 0 0 0 60 0 32000000 3
