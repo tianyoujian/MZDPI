@@ -1,6 +1,7 @@
     cd ~/
 
     git clone https://github.com/tianyoujian/MZDPI.git
+
 #MZP280V
     cd MZDPI/vga
 
@@ -9,12 +10,12 @@
     sudo ./mzdpi-vga-autoinstall-online
 
     sudo reboot
+
 #MZP351HV00BR
+    cd MZDPI/mzp351hv00br
 
-cd MZDPI/mzp351hv00br
+    sudo chmod +x ./mzdpi-hvga-autoinstall
 
-sudo chmod +x ./mzdpi-hvga-autoinstall
+    sudo ./mzdpi-hvga-autoinstall
 
-sudo ./mzdpi-hvga-autoinstall
-
-sudo reboot
+    sudo reboot
