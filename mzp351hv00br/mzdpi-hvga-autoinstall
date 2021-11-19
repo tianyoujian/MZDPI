@@ -39,6 +39,8 @@ cp /boot/tmp.txt /etc/rc.local
 
 rm /boot/tmp.txt
 
+cp ./mzp351hv00br.txt /boot/
+
 cp /boot/config.txt /boot/tmp.txt
 
 sed -i 's/include/#include/g' /boot/tmp.txt

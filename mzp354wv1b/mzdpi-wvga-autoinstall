@@ -1,0 +1,11 @@
+#!/bin/sh
+cp ./mzp354wv1b.txt /boot/
+
+cp /boot/config.txt /boot/tmp.txt
+
+sed  -i "/include mzp/#include mzp" /boot/tmp.txt
+
+echo "include mzp354wv1b.txt" >> /boot/tmp.txt
+
+cp /boot/tmp.txt /boot/config.txt
+
