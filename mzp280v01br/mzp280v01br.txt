@@ -16,7 +16,7 @@ display_default_lcd=1
 dpi_group=2
 dpi_mode=87
     
-dpi_output_format=0x07f003
+dpi_output_format=0x07f203
      
 hdmi_timings=480 0 228 8 1 640 0 4 2 1 0 0 0 60 0 32000000 3
 
