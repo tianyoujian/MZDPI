@@ -1,6 +1,8 @@
 #!/bin/sh
-
 cp /boot/config.txt /boot/tmp.txt
-sed  -i "/include mzp354wv1b.txt/d" /boot/tmp.txt
+
+sed -i 's/include/#include/g' /boot/tmp.txt
+
 cp /boot/tmp.txt /boot/config.txt
+
 rm /boot/tmp.txt
