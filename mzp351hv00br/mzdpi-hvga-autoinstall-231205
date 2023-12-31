@@ -1,0 +1,53 @@
+#!/bin/sh
+
+do_create_conf() {
+if [ -f "/etc/X11/xorg.conf.d/99-calibration.conf" ];then
+	return
+fi
+
+mkdir /etc/X11/xorg.conf.d
+cat <<EOF > /etc/X11/xorg.conf.d/99-calibration.conf 
+Section "InputClass"
+	Identifier	"calibration"
+	MatchProduct	"ADS7846 Touchscreen"
+	Option	"Calibration"	"150 3970 150 3970"
+	Option	"SwapAxes"	"0"
+EndSection
+
+EOF
+
+}
+
+apt-get install xserver-xorg-input-evdev
+apt-get install xinput-calibrator
+apt-get install matchbox-keyboard
+
+do_create_conf
+
+cp /etc/rc.local /boot/tmp.txt
+sed  -i "/exit 0/d" /boot/tmp.txt
+echo "sudo raspi-gpio set 8 a2" >> /boot/tmp.txt
+echo "sudo raspi-gpio set 7 a2" >> /boot/tmp.txt
+echo "exit 0" >> /boot/tmp.txt
+cp /boot/tmp.txt /etc/rc.local 
+
+rm /boot/tmp.txt
+
+cp ./mzp351hv00br.txt /boot/
+
+cp /boot/config.txt /boot/tmp.txt
+
+sed -i 's/display_auto/#display_auto/g' /boot/tmp.txt
+sed -i 's/camera_auto/#camera_auto/g' /boot/tmp.txt
+
+sed -i 's/dtoverlay/#dtoverlay/g' /boot/tmp.txt
+
+sed -i 's/include/#include/g' /boot/tmp.txt
+
+echo "include mzp351hv00br.txt" >> /boot/tmp.txt
+
+sudo cp /boot/tmp.txt /boot/config.txt
+
+rm /boot/tmp.txt
+
+cp ./mzp351hv00br.txt /boot/
