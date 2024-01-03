@@ -50,7 +50,7 @@ sed -i 's/dtoverlay/#dtoverlay/g' /boot/tmp.txt
 
 sed -i 's/include/#include/g' /boot/tmp.txt
 
-echo "include mzp351hv00br.txt" >> /boot/tmp.txt
+echo "\n\[all]\ninclude mzp351hv00br.txt" >> /boot/tmp.txt
 
 sudo cp /boot/tmp.txt /boot/config.txt
 
